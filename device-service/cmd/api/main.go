@@ -1,6 +1,7 @@
 package main
 
 import (
+	"device-service/cmd/httpserver"
 	"flag"
 )
 
@@ -22,5 +23,11 @@ func main() {
 		panic(err)
 	}
 	defer conn.Close()
+
+	httpServer := httpserver.NewHttpServer(app.HttpPort)
+	err = httpServer.Run()
+	if err != nil {
+		panic(err)
+	}
 
 }
