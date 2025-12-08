@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"device-service/internal/repository"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -8,6 +9,7 @@ import (
 )
 
 type HttpHandler struct {
+	Db repository.Repo
 }
 
 func (h *HttpHandler) Routes() http.Handler {

@@ -2,12 +2,15 @@ package main
 
 import (
 	"device-service/cmd/httpserver"
+	"device-service/internal/repository"
+	"device-service/internal/repository/pg"
 	"flag"
 )
 
 type application struct {
 	DSN      string
 	HttpPort string
+	Db       repository.Repo
 }
 
 func main() {
@@ -24,7 +27,11 @@ func main() {
 	}
 	defer conn.Close()
 
-	httpServer := httpserver.NewHttpServer(app.HttpPort)
+	app.Db = &pg.PgRepo{
+		DB: conn,
+	}
+
+	httpServer := httpserver.NewHttpServer(app.HttpPort, app.Db)
 	err = httpServer.Run()
 	if err != nil {
 		panic(err)
