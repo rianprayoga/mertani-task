@@ -7,4 +7,9 @@ type Repo interface {
 	UpdateDevice(id string, req model.CreateDeviceReq) (*model.CreateDeviceRes, error)
 	GetDevice(deviceId string) (*model.CreateDeviceRes, error)
 	DeleteDevice(deviceId string) error
+
+	AddSensor(deviceId string, req model.CreateSensorReq) (*model.CreateSensorRes, error)
+	GetSensor(deviceId string, sensorId string) (*model.CreateSensorRes, error)
+	UpdateSensor(deviceId string, sensorId string, req model.CreateSensorReq) (*model.CreateSensorRes, error)
+	DeleteSensor(deviceId string, sensorId string) error
 }

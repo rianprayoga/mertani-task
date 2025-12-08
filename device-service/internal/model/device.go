@@ -7,14 +7,10 @@ type CreateDeviceReq struct {
 }
 
 type CreateDeviceRes struct {
-	Id        string
+	Id        string  `json:"id"`
 	Name      string  `json:"name"`
 	Lat       float32 `json:"lat"`
 	Long      float32 `json:"long"`
 	CreatedAt string  `json:"createdAt"`
 	UpdatedAt string  `json:"updatedAt"`
-}
-
-type CreateSensorReq struct {
-	sensorName string `json:"name" validate:"required,min=3,max=100"`
 }

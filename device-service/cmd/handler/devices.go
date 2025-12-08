@@ -28,7 +28,7 @@ func (h *HttpHandler) AddDevice(w http.ResponseWriter, r *http.Request) {
 
 func (h *HttpHandler) UpdateDevice(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
-	_, err := getDevice(h, id)
+	_, err := h.GetDeviceById(id)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			h.errorJSON(w, fmt.Errorf("device not found"), http.StatusNotFound)
@@ -60,9 +60,13 @@ func (h *HttpHandler) DeleteDevice(w http.ResponseWriter, r *http.Request) {
 		h.errorJSON(w, fmt.Errorf("unexpected error"))
 		return
 	}
+
+	h.writeJson(w, http.StatusOK, &JSONResponse{
+		Message: "device deleted",
+	})
 }
 
-func getDevice(h *HttpHandler, id string) (*model.CreateDeviceRes, error) {
+func (h *HttpHandler) GetDeviceById(id string) (*model.CreateDeviceRes, error) {
 	res, err := h.Db.GetDevice(id)
 	if err != nil {
 		return nil, err
@@ -73,7 +77,7 @@ func getDevice(h *HttpHandler, id string) (*model.CreateDeviceRes, error) {
 
 func (h *HttpHandler) GetDevice(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
-	res, err := getDevice(h, id)
+	res, err := h.GetDeviceById(id)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			h.errorJSON(w, fmt.Errorf("device not found"), http.StatusNotFound)
