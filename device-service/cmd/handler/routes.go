@@ -22,6 +22,12 @@ func (h *HttpHandler) Routes() http.Handler {
 		r.Post("/", h.AddDevice)
 		r.Put("/{id}", h.UpdateDevice)
 		r.Delete("{id}", h.DeleteDevice)
+
+		r.Get("/{id}/sensors/{sensorId}", h.GetSensor)
+		r.Post("/{id}/sensors", h.AddSensor)
+		r.Put("/{id}/sensors", h.UpdateSensor)
+		r.Delete("{id}/sensors", h.DeleteSensor)
+
 	})
 
 	return mux
